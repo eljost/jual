@@ -1,14 +1,21 @@
+import os
+from Measurement import Measurement
+
 class MeasurementManager:
-    def __init__(self):
+    def __init__(self, path):
+        self.path = path
+        self.measurements = list()
+        self.get_measurements()
+
         self.temp_dict = dict()
         self.dist_dict = dict()
-        self.measurements = list()
+        self.contact_resist_dict = dict()
+        self.arrhenius_dict = dict()
 
         self.temp_keys = None
         self.dist_keys = None
 
-    def add_measurement(self, meas):
-        self.measurements.append(meas)
+        self.update()
 
     def update(self):
         for meas in self.measurements:
@@ -32,3 +39,15 @@ class MeasurementManager:
 
     def get_all(self):
         return self.measurements
+    
+    def list_measurements(self):
+        measurements = list()
+        for entry in os.listdir(self.path):
+            if entry.endswith(".dat"):
+                measurements.append(os.path.join(self.path, entry))
+
+        return measurements
+
+    def get_measurements(self):
+        for meas_path in self.list_measurements():
+            self.measurements.append(Measurement(meas_path))

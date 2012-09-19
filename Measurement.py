@@ -9,9 +9,9 @@ import numpy as np
 temp = {"5-1" : 8.5e-2,"5-2" : 2.5e-2, "5-3" : 5.3e-2}
 
 class Measurement:
-    def __init__(self, path):
-        self.path = path
-        self.name = splitext(basename(path))[0]
+    def __init__(self, path): 
+        self.path = path.replace("\xf8", "")
+        self.name = splitext(basename(self.path))[0]
         self.contact_dist = temp[re.match(".*(\d-\d)[_ ].*", self.name).groups()[0]]
         # 205
         #self.film_thickness = 1.2628e-5

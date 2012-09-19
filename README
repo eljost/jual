@@ -1,0 +1,6 @@
+Needs:
+
+python
+python-scipy
+python-numpy
+python-jinja2

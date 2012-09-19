@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Zusammenfassung</title>
+        
+        <!--
+        <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.8.1.js"></script>
+        <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
+        <script>
+            $(document).ready( function () {
+                        $('table.display').dataTable();
+            } );
+        </script>
+        -->
+    </head>
+    <body>
+        <h1>Zusammenfassung</h1>
+        <table>
+            <caption>Berechnete Widerstaende f&uuml;r verschiedene Messstellen und Temperaturen.</caption>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Temperatur</th>
+                <th>Messstelle</th>
+                <th>R in kOhm</th>
+                <th>R_Schicht in Ohm * cm</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for meas in measurements %}
+            <tr>
+                <td>{{ meas.name }}</td>
+                <td>{{ meas.temp_celcius }}</td>
+                <td>{{ meas.contact_dist }}</td>
+                <td>{{ meas.resist }}</td>
+                <td>{{ meas.film_resist }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h2>Kontaktwiderstaende</h2>
+        <table>
+            <caption>Kontaktwiderstaende fuer verschiedene Temperaturen.</caption>
+            <thead>
+            <tr>
+                <th>T in Celcius</th>
+                <th>R_Kontakt in kOhm</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for temp in contact_resists %}
+                <tr>
+                    <td>{{ temp }}</td>
+                    <td>{{ temp + 273.15 }}</td>
+                    <td>{{ contact_resists[temp] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h2>Arrhenius-Plots</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Messstelle</th>
+                <th>EA in eV</th>
+                <th>Sigma_0</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dist in arrhenius %}
+                <tr>
+                    <td>{{ dist }}</td>
+                    <td>{{ arrhenius[dist][0] }}<td>
+                    <td>{{ arrhenius[dist][1] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
