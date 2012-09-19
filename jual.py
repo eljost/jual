@@ -69,8 +69,8 @@ def run(path, film_thickness):
     output.summary(manager)
 
 if __name__ == "__main__":
-    #path = raw_input("Enter path: ")
-    #film_thickness = raw_input("Enter film thickness: ")
+    path = raw_input("Enter path: ")
+    film_thickness = raw_input("Enter film thickness: ")
     path = "./1-22-204-5/"
     film_thickness = 1.3043911743e-5
     run(path, film_thickness)
