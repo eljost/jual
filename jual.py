@@ -1,54 +1,27 @@
 # -*- coding: utf-8 -*-
-import os
-import logging
-from math import floor, ceil, exp
 
 from scipy import stats
-from pylab import plot, title, show, legend
-from numpy import log, array
+from numpy import log, array, exp
 
 from MeasurementManager import MeasurementManager
 from Output import Output
-
-logging.basicConfig(level=logging.INFO)
+from Geometry import Geometry
 
 def linear_fit(x, y):
     (slope, intercept, r_val, p_val, std_err) = stats.linregress(x, y)
-    logging.debug("Slope: {0} Intercept: {1} Std_error: {2}".format(
-                                                slope, intercept, std_err))
 
     return (slope, intercept, std_err)
 
-def arrhenius_fit(temps, rate_consts):
-    # in eV/K
+def arrhenius_fit(temps, film_resists):
+    # Boltzmann constant in eV/K
     boltzmann = 8.6173423e-5
     recipr_temps = 1 / temps
-    ln_rate_consts = log(1 / array(rate_consts))
-    slope, intercept, std_err = linear_fit(recipr_temps, ln_rate_consts)
+    ln_conducts = log(1 / array(film_resists))
+    slope, intercept, std_err = linear_fit(recipr_temps, ln_conducts)
     actv_energy = -slope * boltzmann
     rate_const_0 = exp(intercept)
 
     return actv_energy, rate_const_0
-
-def split_by_temperature(meas_list):
-    temp_dict = dict()
-    for meas in meas_list:
-        key = meas.temp_celcius
-        if key in temp_dict:
-            temp_dict[key].append(meas)
-        else:
-            temp_dict[key] = list((meas, ))
-    
-    return temp_dict
-
-def sort_by_temperature(x, y):
-    temp_diff = x.temp_celcius - y.temp_celcius
-    if temp_diff < 0:
-        return -1
-    elif temp_diff > 0:
-        return 1
-    else:
-        return 0
 
 def get_contact_resist(meas_list):
     x = [entry.contact_dist * 10 for entry in meas_list]
@@ -58,25 +31,33 @@ def get_contact_resist(meas_list):
     
     return intercept
 
-if __name__ == "__main__":
-    path = "./1-22-204-5/"
-    manager = MeasurementManager(path)
+def get_film_resist(meas, geometry):
+    # in Ohm * cm
+    return ((meas.resist - meas.contact_resist)
+            * geometry.film_thickness * geometry.contact_length
+            / meas.contact_dist * 1000) # because kOhm -> Ohm
+
+def run(path, film_thickness):
+    manager = MeasurementManager(path, Geometry(film_thickness))
        
+    # Calculate the resist R from the U/I-Plot
     for meas in manager.get_all(): 
-        # Calculate the resist R from the U/I-Plot
         x, y = meas.get_measured_values()
         slope, intercept, std_err = linear_fit(x, y)
         meas.resist = 1 / slope
     
+    # Calculate the contact resists
     for temp in manager.temp_keys:
         manager.contact_resist_dict[temp] = get_contact_resist(
-                                            manager.get_by_temp(temp))
+                                                manager.get_by_temp(temp))
     
+    # Correct the resists with the contact resist and the geometry
     for meas in manager.get_all():
         temp_key = meas.temp_celcius
         meas.contact_resist = manager.contact_resist_dict[temp_key]
-        meas.calc_film_resist()
+        meas.film_resist = get_film_resist(meas, manager.geometry)
     
+    # Get activation energy and sigma_0 from an linearized Arrhenius plot
     for dist in manager.dist_keys:
         measurements = manager.get_by_dist(dist)
         film_resists = [meas.film_resist for meas in measurements]
@@ -86,3 +67,10 @@ if __name__ == "__main__":
 
     output = Output(path)
     output.summary(manager)
+
+if __name__ == "__main__":
+    #path = raw_input("Enter path: ")
+    #film_thickness = raw_input("Enter film thickness: ")
+    path = "./1-22-204-5/"
+    film_thickness = 1.3043911743e-5
+    run(path, film_thickness)

@@ -2,8 +2,9 @@ import os
 from Measurement import Measurement
 
 class MeasurementManager:
-    def __init__(self, path):
+    def __init__(self, path, geometry):
         self.path = path
+        self.geometry = geometry
         self.measurements = list()
         self.get_measurements()
 
@@ -19,6 +20,9 @@ class MeasurementManager:
 
     def update(self):
         for meas in self.measurements:
+            meas.contact_dist = self.geometry.contact_dists[
+                                                meas.measuring_point]
+                                                            
             self.add_by_key(self.temp_dict, meas, meas.temp_celcius)
             self.add_by_key(self.dist_dict, meas, meas.contact_dist)
 

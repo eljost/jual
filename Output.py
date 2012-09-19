@@ -13,9 +13,11 @@ class Output:
         measurements = manager.get_all()
         contact_resists = manager.contact_resist_dict
         arrhenius = manager.arrhenius_dict
+        geometry = manager.geometry
 
         template = self.env.get_template("summary.html")
         with open(self.path + "summary.html", "w") as handle:
             handle.write(template.render(measurements=measurements,
                                         contact_resists=contact_resists,
-                                        arrhenius=arrhenius))
+                                        arrhenius=arrhenius,
+                                        geometry=geometry))

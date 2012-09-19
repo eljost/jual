@@ -18,9 +18,9 @@
             <caption>Berechnete Widerstaende f&uuml;r verschiedene Messstellen und Temperaturen.</caption>
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Temperatur</th>
                 <th>Messstelle</th>
+                <th>Temperatur</th>
+                <th>Kontaktabstand</th>
                 <th>R in kOhm</th>
                 <th>R_Schicht in Ohm * cm</th>
             </tr>
@@ -28,7 +28,7 @@
             <tbody>
             {% for meas in measurements %}
             <tr>
-                <td>{{ meas.name }}</td>
+                <td>{{ meas.measuring_point }}</td>
                 <td>{{ meas.temp_celcius }}</td>
                 <td>{{ meas.contact_dist }}</td>
                 <td>{{ meas.resist }}</td>
@@ -60,7 +60,7 @@
         <table>
             <thead>
             <tr>
-                <th>Messstelle</th>
+                <th>Kontaktabstand</th>
                 <th>EA in eV</th>
                 <th>Sigma_0</th>
             </tr>
