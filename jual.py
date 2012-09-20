@@ -67,6 +67,7 @@ def run(path, film_thickness):
 
     output = Output(path)
     output.summary(manager)
+    output.show_summary()
 
 if __name__ == "__main__":
     #path = "./1-22-204-5/"
