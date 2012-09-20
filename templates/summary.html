@@ -14,13 +14,24 @@
     </head>
     <body>
         <h1>Zusammenfassung</h1>
+        <p>Schichtdicke: {{ geometry.film_thickness }} cm</p>
+        <p>Kontaktlaenge: {{ geometry.contact_length }} cm</p>
+        <p>Messstellen: <p>
+        <table>
+        {% for contact_dist_key in geometry.contact_dists %}
+            <tr>
+                <td>{{ contact_dist_key }}</td>
+                <td>{{ geometry.contact_dists[contact_dist_key] }} cm</td>
+            </tr>
+        {% endfor %}
+        </table>
         <table>
             <caption>Berechnete Widerstaende f&uuml;r verschiedene Messstellen und Temperaturen.</caption>
             <thead>
             <tr>
                 <th>Messstelle</th>
-                <th>Temperatur</th>
-                <th>Kontaktabstand</th>
+                <th>T in Celcius</th>
+                <th>Kontaktabstand in cm</th>
                 <th>R in kOhm</th>
                 <th>R_Schicht in Ohm * cm</th>
             </tr>
@@ -43,6 +54,7 @@
             <thead>
             <tr>
                 <th>T in Celcius</th>
+                <th>T in Kelvin</th>
                 <th>R_Kontakt in kOhm</th>
             </tr>
             </thead>
@@ -60,7 +72,7 @@
         <table>
             <thead>
             <tr>
-                <th>Kontaktabstand</th>
+                <th>Kontaktabstand in cm</th>
                 <th>EA in eV</th>
                 <th>Sigma_0</th>
             </tr>

@@ -1,6 +1,9 @@
 Needs:
 
-python
+python2
 python-scipy
 python-numpy
 python-jinja2
+
+Run with:
+python jual.py
