@@ -7,19 +7,26 @@
     </head>
     <body>
         <h1>Zusammenfassung</h1>
+        <p>Generiert am {{ date }}</p>
         <p>Schichtdicke: {{ geometry.film_thickness }} cm</p>
         <p>Kontaktlänge: {{ geometry.contact_length }} cm</p>
-        <p>Messstellen: <p>
-        <table>
+        <table class="sortable">
+            <thead>
+                <tr>
+                    <th>Messstelle</th>
+                    <th>A in cm</th>
+                </tr>
+                <tbody>
         {% for contact_dist_key in geometry.contact_dists %}
             <tr>
                 <td>{{ contact_dist_key }}</td>
                 <td>{{ geometry.contact_dists[contact_dist_key] }} cm</td>
             </tr>
         {% endfor %}
+            </tbody>
         </table>
         <table class="sortable">
-            <caption>Berechnete Widerstände für verschiedene Messstellen und Temperaturen.</caption>
+            <!--<caption>Berechnete Widerstände für verschiedene Messstellen und Temperaturen.</caption>-->
             <thead>
             <tr>
                 <th>Messstelle</th>
@@ -41,9 +48,9 @@
             {% endfor %}
             </tbody>
         </table>
-        <h2>Kontaktwiderstaende</h2>
+        <h2>Kontaktwiderstände</h2>
         <table class="sortable">
-            <caption>Kontaktwiderstände fuer verschiedene Temperaturen.</caption>
+            <!--<caption>Kontaktwiderstände für verschiedene Temperaturen.</caption>-->
             <thead>
             <tr>
                 <th>T in &deg;C</th>
@@ -67,14 +74,14 @@
             <tr>
                 <th>A in cm</th>
                 <th>E<sub>A</sub> in eV</th>
-                <th>&sigma;<sub>0</sub></th>
+                <th>&sigma;<sub>0</sub> in 1 / (&Omega; * cm)</th>
             </tr>
             </thead>
             <tbody>
             {% for dist in arrhenius %}
                 <tr>
                     <td>{{ dist }}</td>
-                    <td>{{ arrhenius[dist][0] }}<td>
+                    <td>{{ arrhenius[dist][0] }}</td>
                     <td>{{ arrhenius[dist][1] }}</td>
                 </tr>
             {% endfor %}

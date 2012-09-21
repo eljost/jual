@@ -1,3 +1,4 @@
+import datetime
 import os
 import webbrowser
 
@@ -17,13 +18,15 @@ class Output:
         contact_resists = manager.contact_resist_dict
         arrhenius = manager.arrhenius_dict
         geometry = manager.geometry
+        date = datetime.datetime.now()
 
         template = self.env.get_template(self.summary_name)
         with open(self.summary_path, "w") as handle:
             handle.write(template.render(measurements=measurements,
                                         contact_resists=contact_resists,
                                         arrhenius=arrhenius,
-                                        geometry=geometry).encode("utf-8"))
+                                        geometry=geometry,
+                                        date=date).encode("utf-8"))
     
     def show_summary(self):
         try:
