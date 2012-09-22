@@ -10,6 +10,3 @@ python jual.py
 
 Thanks to http://www.kryogenix.org/code/browser/sorttable for the tablesort javascript.
 Thanks to http://veerle-v2.duoh.com/blog/comments/a_css_styled_table/ for the table css.
-
-IMPORTANT:
-The program skips negative voltages and currents in the *.dat-files!
