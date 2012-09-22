@@ -1,0 +1,3 @@
+{% for temp in manager.contact_resist_dict -%}
+{{ temp }} {{ temp + 273.15 }} {{ manager.contact_resist_dict[temp] }}
+{% endfor %}

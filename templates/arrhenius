@@ -1,0 +1,4 @@
+# Aincm EAineV sigma0
+{% for dist in manager.arrhenius_dict -%}
+{{ dist }} {{ manager.arrhenius_dict[dist][0] }} {{ manager.arrhenius_dict[dist][1] }}
+{% endfor %}

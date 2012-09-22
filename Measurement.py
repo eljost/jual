@@ -25,8 +25,10 @@ class Measurement:
             handle.next()
             handle.next()
             for row in csv.reader(handle, delimiter="\t"):
-                self.x = np.append(self.x, row[0])
-                self.y = np.append(self.y, row[1])
+                # Skip negative values
+                if (float(row[0]) >= 0) and (float(row[1]) >= 0):
+                    self.x = np.append(self.x, row[0])
+                    self.y = np.append(self.y, row[1])
 
         self.x = self.x.astype(np.float)
         self.y = self.y.astype(np.float)

@@ -8,8 +8,9 @@
     <body>
         <h1>Zusammenfassung</h1>
         <p>Generiert am {{ date }}</p>
-        <p>Schichtdicke: {{ geometry.film_thickness }} cm</p>
-        <p>Kontaktlänge: {{ geometry.contact_length }} cm</p>
+        <p>Pfad: {{ manager.path }}</p>
+        <p>Schichtdicke: {{ manager.geometry.film_thickness }} cm</p>
+        <p>Kontaktlänge: {{ manager.geometry.contact_length }} cm</p>
         <table class="sortable">
             <thead>
                 <tr>
@@ -17,10 +18,10 @@
                     <th>A in cm</th>
                 </tr>
                 <tbody>
-        {% for contact_dist_key in geometry.contact_dists %}
+        {% for contact_dist_key in manager.geometry.contact_dists %}
             <tr>
                 <td>{{ contact_dist_key }}</td>
-                <td>{{ geometry.contact_dists[contact_dist_key] }} cm</td>
+                <td>{{ manager.geometry.contact_dists[contact_dist_key] }} cm</td>
             </tr>
         {% endfor %}
             </tbody>
@@ -42,8 +43,8 @@
                 <td>{{ meas.measuring_point }}</td>
                 <td>{{ meas.temp_celcius }}</td>
                 <td>{{ meas.contact_dist }}</td>
-                <td>{{ "%.4e"|format(meas.resist) }}</td>
-                <td>{{ "%.4e"|format(meas.film_resist) }}</td>
+                <td>{{ "%.3e"|format(meas.resist) }}</td>
+                <td>{{ "%.3e"|format(meas.film_resist) }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -59,11 +60,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for temp in contact_resists %}
+            {% for temp in manager.contact_resist_dict %}
                 <tr>
                     <td>{{ temp }}</td>
                     <td>{{ temp + 273.15 }}</td>
-                    <td>{{ contact_resists[temp] }}</td>
+                    <td>{{ "%.3e"|format(manager.contact_resist_dict[temp]) }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -78,11 +79,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for dist in arrhenius %}
+            {% for dist in manager.arrhenius_dict %}
                 <tr>
                     <td>{{ dist }}</td>
-                    <td>{{ arrhenius[dist][0] }}</td>
-                    <td>{{ arrhenius[dist][1] }}</td>
+                    <td>{{ "%.4f"|format(manager.arrhenius_dict[dist][0]) }}</td>
+                    <td>{{ "%.4f"|format(manager.arrhenius_dict[dist][1]) }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,0 +1,4 @@
+# Messstelle TinC TinK Aincm RinkOhm RSchichtinOhmcm
+{% for meas in manager.measurements -%}
+{{ meas.measuring_point }} {{ meas.temp_celcius }} {{ meas.temp_kelvin }} {{ meas.contact_dist }} {{ meas.resist }} {{ meas.film_resist }}
+{% endfor %}
