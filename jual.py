@@ -108,7 +108,7 @@ def run(path, film_thickness, logger):
 
 if __name__ == "__main__":
     path = pwd_dir_menu() 
-    film_thickness = 1.3043911743e-5
-    #film_thickness = float(raw_input("Enter film thickness (in cm): "))
+    #film_thickness = 1.3043911743e-5
+    film_thickness = float(raw_input("Enter film thickness (in cm): "))
     logger = get_logger(path)
     run(path, film_thickness, logger)
