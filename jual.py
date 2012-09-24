@@ -105,6 +105,7 @@ def run(path, film_thickness, logger):
     output.measurements_raw(manager)
     output.arrhenius_raw(manager)
     output.contact_resist_raw(manager)
+    output.film_resist_raw(manager)
 
 if __name__ == "__main__":
     path = pwd_dir_menu() 

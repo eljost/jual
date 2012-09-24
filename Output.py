@@ -14,6 +14,7 @@ class Output:
         self.measurements_name = "measurements"
         self.arrhenius_name = "arrhenius"
         self.contact_resist_name = "contact_resist"
+        self.film_resist_name = "film_resist"
         self.summary_path = self.path + self.summary_name
 
     def summary(self, manager):
@@ -41,8 +42,16 @@ class Output:
     def contact_resist_raw(self, manager):
         self.write_raw(manager, self.contact_resist_name)
 
-    def write_raw(self, manager, template_name):
-        template = self.env.get_template(template_name)
+    def film_resist_raw(self, manager):
+        template = self.env.get_template(self.film_resist_name)
+        for temp_celcius in manager.temp_dict:
+            tmp_name = self.film_resist_name + "_{0}".format(temp_celcius)
+            with open(self.path + tmp_name, "w") as handle:
+                handle.write(template.render(by_temp=manager.get_by_temp(temp_celcius)))
+
+    def write_raw(self, manager, template_name, template=None):
+        if template is None:
+            template = self.env.get_template(template_name)
         with open(self.path + template_name, "w") as handle:
             handle.write(template.render(manager=manager))
     

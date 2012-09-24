@@ -1,0 +1,4 @@
+# Aincm R in kOhm
+{% for meas in by_temp -%}
+{{ meas.contact_dist }} {{ meas.resist }}
+{% endfor %}

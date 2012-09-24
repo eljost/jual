@@ -14,7 +14,7 @@ class Measurement:
         self.measuring_point = re.match(".*(\d-\d)[_ ].*",
                                             self.name).groups()[0]
         # Has to be set somewhere where the Geometry object is in scope
-        self.contact_distance = None
+        self.contact_dist = None
         self.temp_celcius = float(re.match(".*?(\d+\.\d+).*C",
                                             self.name).groups()[0])
         self.temp_kelvin = self.temp_celcius + 273.15 
